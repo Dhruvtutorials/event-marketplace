@@ -6,6 +6,7 @@ import {
   PlatformSettings,
   ClientEvent,
   Booking,
+  Invoice,
 } from '@/types';
 
 export const SUPPORTED_CITIES = [
@@ -1374,3 +1375,53 @@ export const INITIAL_BOOKINGS: Booking[] = [
     updated_at: '2026-03-12T16:00:00Z',
   },
 ];
+
+export const INITIAL_INVOICES: Invoice[] = [
+  {
+    id: 'inv-101',
+    invoice_number: 'INV-AMD-2026-0101',
+    payment_id: 'pay-rzp-0101',
+    razorpay_payment_id: 'pay_AMD98327101',
+    event_id: 'evt-demo-1',
+    event_title: 'Patel Family Sangeet & Wedding',
+    event_date: '2026-11-20',
+    client_id: 'usr-client-1',
+    client_name: 'Aarav Patel',
+    client_email: 'aarav.patel@example.com',
+    client_phone: '+91 98250 12345',
+    billing_address: '402, Shivalik High Street, Keshavbaug, Satellite, Ahmedabad',
+    city: 'Ahmedabad',
+    state: 'Gujarat (24)',
+    payment_type: 'ADVANCE',
+    payment_method: 'UPI (Google Pay / Razorpay)',
+    payment_date: '2026-03-01T10:05:00Z',
+    subtotal: 220000,
+    platform_fee: 0,
+    gst_rate_percent: 18,
+    cgst_amount: 0,
+    sgst_amount: 0,
+    total_gst: 0,
+    total_paid: 66000,
+    total_booking_value: 220000,
+    balance_due: 154000,
+    items: [
+      {
+        id: 'inv-item-1',
+        vendor_id: 'vnd-1',
+        vendor_name: 'Shubh Mangal Party Plot & Lawn',
+        category_name: 'Venue & Banquet',
+        package_name: 'Grand Evening Wedding & Reception',
+        sac_code: '998599 (Event & Convention Services)',
+        amount: 220000,
+        advance_paid: 66000,
+        balance_due: 154000,
+      },
+    ],
+    company_name: 'Utsav Event Planning Marketplace Pvt. Ltd.',
+    company_gst: '24AABCU9821R1ZZ',
+    company_pan: 'AABCU9821R',
+    company_address: 'Level 5, Mondeal Heights, SG Highway, Ahmedabad, Gujarat 380015',
+    status: 'PAID',
+  },
+];
+

@@ -13,6 +13,8 @@ import {
   ChatMessage,
   Dispute,
   UserRole,
+  Invoice,
+  InvoiceItem,
 } from '@/types';
 import {
   INITIAL_CATEGORIES,
@@ -22,6 +24,7 @@ import {
   INITIAL_VENDORS,
   INITIAL_CLIENT_EVENT,
   INITIAL_BOOKINGS,
+  INITIAL_INVOICES,
   SUPPORTED_CITIES,
 } from './db-seed';
 import { maskSensitiveContacts } from './utils';
@@ -58,7 +61,19 @@ interface MarketplaceContextType {
     addons?: { id: string; name: string; price: number }[]
   ) => void;
   removePlanItem: (itemId: string) => void;
-  checkoutEventPlan: (paymentType: 'ADVANCE' | 'FULL') => Booking[];
+  checkoutEventPlan: (
+    paymentType: 'ADVANCE' | 'FULL',
+    clientDetails?: {
+      clientName?: string;
+      clientEmail?: string;
+      clientPhone?: string;
+      billingAddress?: string;
+    }
+  ) => { bookings: Booking[]; invoice: Invoice };
+
+  // Invoices & Bills
+  invoices: Invoice[];
+  getInvoiceById: (id: string) => Invoice | undefined;
 
   // Bookings
   bookings: Booking[];
@@ -100,6 +115,7 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
   const [vendors, setVendors] = useState<Vendor[]>(INITIAL_VENDORS);
   const [clientEvent, setClientEvent] = useState<ClientEvent>(INITIAL_CLIENT_EVENT);
   const [bookings, setBookings] = useState<Booking[]>(INITIAL_BOOKINGS);
+  const [invoices, setInvoices] = useState<Invoice[]>(INITIAL_INVOICES);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'msg-1',
@@ -154,6 +170,9 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
       const storedBookings = localStorage.getItem('utsav_bookings');
       if (storedBookings) setBookings(JSON.parse(storedBookings));
 
+      const storedInvoices = localStorage.getItem('utsav_invoices');
+      if (storedInvoices) setInvoices(JSON.parse(storedInvoices));
+
       const storedMessages = localStorage.getItem('utsav_messages');
       if (storedMessages) setMessages(JSON.parse(storedMessages));
     } catch {
@@ -184,11 +203,12 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
       localStorage.setItem('utsav_vendors', JSON.stringify(vendors));
       localStorage.setItem('utsav_client_event', JSON.stringify(clientEvent));
       localStorage.setItem('utsav_bookings', JSON.stringify(bookings));
+      localStorage.setItem('utsav_invoices', JSON.stringify(invoices));
       localStorage.setItem('utsav_messages', JSON.stringify(messages));
     } catch {
       // handle error
     }
-  }, [settings, vendors, clientEvent, bookings, messages, isLoaded]);
+  }, [settings, vendors, clientEvent, bookings, invoices, messages, isLoaded]);
 
   const updateSettings = (newSettings: Partial<PlatformSettings>) => {
     setSettings((prev) => ({ ...prev, ...newSettings }));
@@ -244,7 +264,23 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
     }));
   };
 
-  const checkoutEventPlan = (paymentType: 'ADVANCE' | 'FULL') => {
+  const checkoutEventPlan = (
+    paymentType: 'ADVANCE' | 'FULL',
+    clientDetails?: {
+      clientName?: string;
+      clientEmail?: string;
+      clientPhone?: string;
+      billingAddress?: string;
+    }
+  ) => {
+    const totalAmount = clientEvent.plan_items.reduce((sum, item) => sum + item.price, 0);
+    const advancePercentage = settings.advance_percent; // 30%
+    const payableAmount = paymentType === 'ADVANCE' ? Math.round(totalAmount * (advancePercentage / 100)) : totalAmount;
+    const remainingAmount = totalAmount - payableAmount;
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+    const invoiceNum = `INV-AMD-2026-${randomSuffix}`;
+    const rzpPaymentId = `pay_AMD${Date.now().toString().slice(-6)}${randomSuffix}`;
+
     const newBookings: Booking[] = clientEvent.plan_items
       .filter((item) => item.vendor_id)
       .map((item) => {
@@ -255,22 +291,76 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
           event_id: clientEvent.id,
           event_title: clientEvent.title,
           client_id: clientEvent.client_id,
-          client_name: 'Parth Patel (Client)',
-          client_phone: '+91 98250 99999',
+          client_name: clientDetails?.clientName || 'Parth Patel (Client)',
+          client_phone: clientDetails?.clientPhone || '+91 98250 99999',
           vendor_id: item.vendor_id!,
           vendor_name: item.vendor_name || 'Vendor',
           category_name: categories.find((c) => c.id === item.category_id)?.name || 'Service',
           event_date: clientEvent.event_date,
           amount: item.price,
-          advance_amount: advanceAmount,
-          remaining_amount: item.price - advanceAmount,
+          advance_amount: paymentType === 'ADVANCE' ? advanceAmount : item.price,
+          remaining_amount: paymentType === 'ADVANCE' ? item.price - advanceAmount : 0,
           status: 'CONFIRMED' as const,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
       });
 
+    const invoiceItems: InvoiceItem[] = clientEvent.plan_items
+      .filter((item) => item.vendor_id)
+      .map((item, idx) => {
+        const itemAdvance = Math.round(item.price * (settings.advance_percent / 100));
+        return {
+          id: `inv-item-${Date.now()}-${idx}`,
+          vendor_id: item.vendor_id,
+          vendor_name: item.vendor_name || 'Vendor Service',
+          category_name: categories.find((c) => c.id === item.category_id)?.name || 'Event Service',
+          package_name: item.package_name || 'Standard Package',
+          sac_code: '998599 (Event Planning & Hospitality)',
+          amount: item.price,
+          advance_paid: paymentType === 'ADVANCE' ? itemAdvance : item.price,
+          balance_due: paymentType === 'ADVANCE' ? item.price - itemAdvance : 0,
+        };
+      });
+
+    const newInvoice: Invoice = {
+      id: `inv-${Date.now()}`,
+      invoice_number: invoiceNum,
+      payment_id: `pay-${Date.now()}`,
+      razorpay_payment_id: rzpPaymentId,
+      event_id: clientEvent.id,
+      event_title: clientEvent.title,
+      event_date: clientEvent.event_date,
+      client_id: clientEvent.client_id,
+      client_name: clientDetails?.clientName || 'Parth Patel',
+      client_email: clientDetails?.clientEmail || 'parth.patel@example.com',
+      client_phone: clientDetails?.clientPhone || '+91 98250 99999',
+      billing_address:
+        clientDetails?.billingAddress || '402, High Street, Sindhu Bhavan Road, Bodakdev, Ahmedabad, Gujarat',
+      city: clientEvent.city || 'Ahmedabad',
+      state: 'Gujarat (State Code: 24)',
+      payment_type: paymentType,
+      payment_method: 'UPI / Razorpay Route Escrow',
+      payment_date: new Date().toISOString(),
+      subtotal: totalAmount,
+      platform_fee: 0,
+      gst_rate_percent: 18,
+      cgst_amount: 0,
+      sgst_amount: 0,
+      total_gst: 0,
+      total_paid: payableAmount,
+      total_booking_value: totalAmount,
+      balance_due: remainingAmount,
+      items: invoiceItems,
+      company_name: 'Utsav Event Planning Marketplace Pvt. Ltd.',
+      company_gst: '24AABCU9821R1ZZ',
+      company_pan: 'AABCU9821R',
+      company_address: 'Level 5, Mondeal Heights, SG Highway, Ahmedabad, Gujarat 380015',
+      status: 'PAID',
+    };
+
     setBookings((prev) => [...newBookings, ...prev]);
+    setInvoices((prev) => [newInvoice, ...prev]);
 
     // Mark plan items as confirmed
     setClientEvent((prev) => ({
@@ -279,7 +369,7 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
       plan_items: prev.plan_items.map((i) => ({ ...i, status: 'CONFIRMED' })),
     }));
 
-    return newBookings;
+    return { bookings: newBookings, invoice: newInvoice };
   };
 
   const updateBookingStatus = (
@@ -431,6 +521,12 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
     updateBookingStatus(bookingId, 'DISPUTED');
   };
 
+  const getInvoiceById = (id: string) => {
+    return invoices.find(
+      (inv) => inv.id === id || inv.invoice_number === id || inv.event_id === id
+    );
+  };
+
   const resolveDispute = (disputeId: string, resolution: Dispute['status'], notes: string) => {
     setDisputes((prev) =>
       prev.map((d) => (d.id === disputeId ? { ...d, status: resolution, resolution_notes: notes } : d))
@@ -460,6 +556,8 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
         addVendorToPlan,
         removePlanItem,
         checkoutEventPlan,
+        invoices,
+        getInvoiceById,
         bookings,
         updateBookingStatus,
         getVendorById,

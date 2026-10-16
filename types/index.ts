@@ -288,3 +288,51 @@ export interface PlatformSettings {
   support_phone: string;
   support_email: string;
 }
+
+export interface InvoiceItem {
+  id: string;
+  vendor_id?: string;
+  vendor_name: string;
+  category_name?: string;
+  package_name?: string;
+  sac_code: string; // Service Accounting Code e.g. 998599
+  amount: number;
+  advance_paid: number;
+  balance_due: number;
+}
+
+export interface Invoice {
+  id: string; // e.g. "INV-2026-0042"
+  invoice_number: string;
+  payment_id: string;
+  razorpay_payment_id: string;
+  event_id: string;
+  event_title: string;
+  event_date: string;
+  client_id: string;
+  client_name: string;
+  client_email: string;
+  client_phone: string;
+  billing_address: string;
+  city: string;
+  state: string;
+  payment_type: 'ADVANCE' | 'FULL';
+  payment_method: string;
+  payment_date: string;
+  subtotal: number;
+  platform_fee: number;
+  gst_rate_percent: number; // 18% GST (9% CGST + 9% SGST)
+  cgst_amount: number;
+  sgst_amount: number;
+  total_gst: number;
+  total_paid: number;
+  total_booking_value: number;
+  balance_due: number;
+  items: InvoiceItem[];
+  company_name: string;
+  company_gst: string;
+  company_pan: string;
+  company_address: string;
+  status: 'PAID' | 'REFUNDED';
+}
+
