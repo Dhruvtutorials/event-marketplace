@@ -18,12 +18,12 @@ import {
 
 export default function NewEventPage() {
   const router = useRouter();
-  const { eventTypes, createOrUpdateEvent, clientEvent } = useMarketplace();
+  const { eventTypes, createOrUpdateEvent, clientEvent, cities, selectedCity, setSelectedCity } = useMarketplace();
 
   const [selectedEventTypeId, setSelectedEventTypeId] = useState(eventTypes[0]?.id || 'evt-wedding');
   const [eventTitle, setEventTitle] = useState('Parth & Dhwani Grand Wedding');
   const [eventDate, setEventDate] = useState('2026-11-28');
-  const [locality, setLocality] = useState('SG Highway');
+  const [city, setCity] = useState(selectedCity === 'All Cities' ? 'Ahmedabad' : selectedCity);
   const [guestCount, setGuestCount] = useState(450);
   const [budgetMin, setBudgetMin] = useState(500000);
   const [budgetMax, setBudgetMax] = useState(900000);
@@ -37,7 +37,8 @@ export default function NewEventPage() {
       event_type_name: typeObj.name,
       title: eventTitle,
       event_date: eventDate,
-      locality,
+      city,
+      locality: city,
       guest_count: guestCount,
       budget_min: budgetMin,
       budget_max: budgetMax,
@@ -47,27 +48,25 @@ export default function NewEventPage() {
     router.push(`/events/${clientEvent.id}`);
   };
 
-  const localities = ['SG Highway', 'Sindhu Bhavan Road', 'Bodakdev', 'Satellite', 'Bopal', 'Vastrapur', 'Maninagar'];
-
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 space-y-8 text-gray-900 dark:text-gray-100">
       <div className="text-center space-y-2">
         <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
           Step 1 &amp; 2: Event Initialization
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-950">
-          Plan Your Ahmedabad Celebration
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-950 dark:text-white">
+          Plan Your Event in Any City
         </h1>
-        <p className="text-xs sm:text-sm text-gray-500">
+        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
           Enter event parameters to generate a custom service checklist, budget tracker, and verified vendor match.
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-sm">
+      <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Step A: Event Type Selector */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
               Choose Event Type
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -80,13 +79,13 @@ export default function NewEventPage() {
                     onClick={() => {
                       setSelectedEventTypeId(et.id);
                       if (eventTitle.includes('Wedding') && et.slug === 'garba') {
-                        setEventTitle('Amdavad Dandiya & Garba Raas 2026');
+                        setEventTitle('Dandiya & Garba Raas Festival');
                       }
                     }}
                     className={`p-3 rounded-2xl border text-left transition-all ${
                       isSelected
-                        ? 'border-orange-600 bg-orange-50/50 ring-2 ring-orange-500/20 shadow-xs'
-                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                        ? 'border-orange-600 bg-orange-50/50 dark:bg-orange-950/30 ring-2 ring-orange-500/20 shadow-xs'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-gray-800'
                     }`}
                   >
                     <div className="text-orange-600 mb-2">
@@ -95,7 +94,7 @@ export default function NewEventPage() {
                       {et.slug === 'birthday' && <Cake className="w-5 h-5" />}
                       {et.slug === 'corporate' && <Briefcase className="w-5 h-5" />}
                     </div>
-                    <h4 className="font-bold text-xs text-gray-900 leading-tight">{et.name}</h4>
+                    <h4 className="font-bold text-xs text-gray-900 dark:text-white leading-tight">{et.name}</h4>
                   </button>
                 );
               })}
@@ -104,7 +103,7 @@ export default function NewEventPage() {
 
           {/* Event Title */}
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+            <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
               Event Title / Occasion Name
             </label>
             <input
@@ -112,15 +111,15 @@ export default function NewEventPage() {
               required
               value={eventTitle}
               onChange={(e) => setEventTitle(e.target.value)}
-              placeholder="e.g. Patel Family Royal Wedding"
-              className="w-full text-xs font-medium px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              placeholder="e.g. Royal Wedding Celebration"
+              className="w-full text-xs font-medium px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
-          {/* Date & Locality Grid */}
+          {/* Date & City Selection */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1">
+              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5 text-orange-600" />
                 Target Date
               </label>
@@ -129,21 +128,24 @@ export default function NewEventPage() {
                 required
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
-                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1">
+              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1">
                 <MapPin className="w-3.5 h-3.5 text-orange-600" />
-                Ahmedabad Locality
+                City
               </label>
               <select
-                value={locality}
-                onChange={(e) => setLocality(e.target.value)}
-                className="w-full text-xs font-medium px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                value={city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  setSelectedCity(e.target.value);
+                }}
+                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
               >
-                {localities.map((loc) => (
+                {cities.filter(c => c !== 'All Cities').map((loc) => (
                   <option key={loc} value={loc}>
                     {loc}
                   </option>
@@ -155,7 +157,7 @@ export default function NewEventPage() {
           {/* Guest Count & Budget Range */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1">
+              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1">
                 <Users className="w-3.5 h-3.5 text-orange-600" />
                 Estimated Guests
               </label>
@@ -166,12 +168,12 @@ export default function NewEventPage() {
                 step="50"
                 value={guestCount}
                 onChange={(e) => setGuestCount(Number(e.target.value))}
-                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1">
+              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1">
                 <IndianRupee className="w-3.5 h-3.5 text-gray-500" />
                 Min Target Budget
               </label>
@@ -181,12 +183,12 @@ export default function NewEventPage() {
                 step="25000"
                 value={budgetMin}
                 onChange={(e) => setBudgetMin(Number(e.target.value))}
-                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1">
+              <label className="text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider flex items-center gap-1">
                 <IndianRupee className="w-3.5 h-3.5 text-orange-600" />
                 Max Target Budget
               </label>
@@ -196,13 +198,13 @@ export default function NewEventPage() {
                 step="50000"
                 value={budgetMax}
                 onChange={(e) => setBudgetMax(Number(e.target.value))}
-                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="w-full text-xs font-semibold px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
           </div>
 
           {/* Submit */}
-          <div className="pt-4 border-t border-gray-100 flex items-center justify-end">
+          <div className="pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-end">
             <button
               type="submit"
               className="py-3 px-6 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs rounded-xl shadow-md shadow-orange-500/30 flex items-center gap-2 transition-transform active:scale-95"

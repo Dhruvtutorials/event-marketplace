@@ -19,15 +19,15 @@ export function BudgetTracker() {
   const isOverBudget = totalAllocated > maxBudget && maxBudget > 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 gap-2">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-sm text-gray-900 dark:text-gray-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800 gap-2">
         <div>
           <span className="text-xs font-semibold text-orange-600 tracking-wider uppercase">Live Budget Health</span>
-          <h3 className="text-base font-bold text-gray-900">{clientEvent.title}</h3>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white">{clientEvent.title}</h3>
         </div>
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-gray-500">Target Range:</span>
-          <span className="font-semibold text-gray-800">
+          <span className="text-gray-500 dark:text-gray-400">Target Range:</span>
+          <span className="font-semibold text-gray-800 dark:text-gray-200">
             {formatINR(minBudget)} – {formatINR(maxBudget)}
           </span>
         </div>
@@ -36,12 +36,12 @@ export function BudgetTracker() {
       {/* Progress Bar */}
       <div className="py-4 space-y-2">
         <div className="flex justify-between text-xs font-medium">
-          <span className="text-gray-600">Total Booked Services</span>
-          <span className={`font-bold ${isOverBudget ? 'text-red-600' : 'text-gray-900'}`}>
+          <span className="text-gray-600 dark:text-gray-400">Total Booked Services</span>
+          <span className={`font-bold ${isOverBudget ? 'text-red-600' : 'text-gray-900 dark:text-white'}`}>
             {formatINR(totalAllocated)} ({percentageUsed}% of max budget)
           </span>
         </div>
-        <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+        <div className="w-full bg-gray-100 dark:bg-gray-800 h-2.5 rounded-full overflow-hidden">
           <div
             className={`h-full transition-all duration-500 rounded-full ${
               isOverBudget
@@ -57,27 +57,27 @@ export function BudgetTracker() {
 
       {/* Financial Split: Advance vs Remaining */}
       <div className="grid grid-cols-2 gap-3 pt-2">
-        <div className="bg-orange-50/70 border border-orange-200/60 rounded-xl p-3">
-          <div className="flex items-center gap-1.5 text-xs text-orange-800 font-semibold mb-1">
+        <div className="bg-orange-50/70 dark:bg-orange-950/30 border border-orange-200/60 dark:border-orange-800/40 rounded-xl p-3">
+          <div className="flex items-center gap-1.5 text-xs text-orange-800 dark:text-orange-300 font-semibold mb-1">
             <Wallet className="w-3.5 h-3.5 text-orange-600" />
             <span>Payable Advance ({settings.advance_percent}%)</span>
           </div>
-          <p className="text-lg font-bold text-orange-950">{formatINR(advanceAmount)}</p>
-          <p className="text-[11px] text-orange-700 mt-0.5">Held in Escrow until confirmation</p>
+          <p className="text-lg font-bold text-orange-950 dark:text-orange-200">{formatINR(advanceAmount)}</p>
+          <p className="text-[11px] text-orange-700 dark:text-orange-400 mt-0.5">Held in Escrow until confirmation</p>
         </div>
 
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-3">
-          <div className="flex items-center gap-1.5 text-xs text-gray-700 font-semibold mb-1">
-            <TrendingUp className="w-3.5 h-3.5 text-gray-600" />
+        <div className="bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl p-3">
+          <div className="flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 font-semibold mb-1">
+            <TrendingUp className="w-3.5 h-3.5 text-gray-600 dark:text-gray-400" />
             <span>Post-Event Payout</span>
           </div>
-          <p className="text-lg font-bold text-gray-900">{formatINR(remainingAmount)}</p>
-          <p className="text-[11px] text-gray-500 mt-0.5">Released {settings.payout_delay_days} days after event</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-white">{formatINR(remainingAmount)}</p>
+          <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Released {settings.payout_delay_days} days after event</p>
         </div>
       </div>
 
       {isOverBudget && (
-        <div className="mt-3 flex items-start gap-2 p-2.5 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700">
+        <div className="mt-3 flex items-start gap-2 p-2.5 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 rounded-xl text-xs text-red-700 dark:text-red-300">
           <ShieldAlert className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
           <span>
             You have exceeded your max budget by {formatINR(totalAllocated - maxBudget)}. Consider adjusting packages or add-ons.

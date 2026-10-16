@@ -31,11 +31,19 @@ import { formatINR } from '@/lib/utils';
 
 export default function HomePage() {
   const router = useRouter();
-  const { eventTypes, categories, vendors, createOrUpdateEvent, clientEvent } = useMarketplace();
+  const {
+    eventTypes,
+    categories,
+    vendors,
+    createOrUpdateEvent,
+    clientEvent,
+    selectedCity,
+    setSelectedCity,
+    cities,
+  } = useMarketplace();
 
   // Search state
   const [selectedEventType, setSelectedEventType] = useState(eventTypes[0]?.id || 'evt-wedding');
-  const [selectedLocality, setSelectedLocality] = useState('All Ahmedabad');
   const [eventDate, setEventDate] = useState('2026-11-28');
   const [guestCount, setGuestCount] = useState(400);
 
@@ -47,37 +55,46 @@ export default function HomePage() {
       event_type_id: eventTypeObj.id,
       event_type_name: eventTypeObj.name,
       event_date: eventDate,
-      locality: selectedLocality === 'All Ahmedabad' ? 'SG Highway' : selectedLocality,
+      city: selectedCity === 'All Cities' ? 'Ahmedabad' : selectedCity,
       guest_count: guestCount,
-      title: `${eventTypeObj.name} in ${selectedLocality === 'All Ahmedabad' ? 'Ahmedabad' : selectedLocality}`,
+      title: `${eventTypeObj.name} in ${selectedCity === 'All Cities' ? 'Gujarat & Pan-India' : selectedCity}`,
     });
 
     router.push(`/events/${clientEvent.id}`);
   };
 
-  const featuredVendors = vendors.filter((v) => v.status === 'ACTIVE').slice(0, 6);
+  // Filter featured vendors by city if specific city selected
+  const featuredVendors = vendors
+    .filter((v) => {
+      if (v.status !== 'ACTIVE') return false;
+      if (selectedCity !== 'All Cities' && v.city.toLowerCase() !== selectedCity.toLowerCase()) {
+        return false;
+      }
+      return true;
+    })
+    .slice(0, 6);
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="space-y-16 pb-20 bg-transparent text-gray-900 dark:text-gray-100 transition-colors">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-orange-50 via-white to-gray-50 pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-200">
+      <section className="relative overflow-hidden bg-gradient-to-b from-orange-50/80 via-white to-gray-50 dark:from-gray-900/80 dark:via-gray-950 dark:to-gray-900 pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto">
           {/* Tagline */}
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs font-bold uppercase tracking-wider shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 dark:bg-orange-950/50 text-orange-800 dark:text-orange-300 text-xs font-bold uppercase tracking-wider shadow-xs border border-orange-200 dark:border-orange-800/40">
               <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-              <span>Ahmedabad’s Verified Event Ecosystem</span>
+              <span>Multi-City Verified Event Network • {selectedCity}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-950 tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
               Ek Jagah Par Pura Utsav Plan &amp; Book Karein
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
-              Shaadi, Navratri Garba, ya Corporate Event. Verified party plots, authentic Gujarati caterers, decorators, and photographers ko compare karein aur ek hi advance checkout me book karein.
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              Ahmedabad, Surat, Vadodara, Rajkot, Mumbai, Udaipur, Jaipur aur All Cities me verified venues, authentic caterers, decorators, aur photographers ko compare karein aur ek hi single checkout me book karein.
             </p>
           </div>
 
           {/* Smart Search & Filter Box */}
-          <div className="mt-10 max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-gray-200/80 p-4 sm:p-6 backdrop-blur-md">
+          <div className="mt-10 max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-200/80 dark:border-gray-800 p-4 sm:p-6 backdrop-blur-md">
             <form onSubmit={handleStartPlanning} className="space-y-4">
               {/* Event Type Tabs */}
               <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -91,7 +108,7 @@ export default function HomePage() {
                       className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                         isSelected
                           ? 'bg-orange-600 text-white shadow-md shadow-orange-500/20'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
                     >
                       {et.slug === 'wedding' && <HeartHandshake className="w-4 h-4" />}
@@ -106,31 +123,28 @@ export default function HomePage() {
 
               {/* Input Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
-                {/* Locality in Ahmedabad */}
+                {/* City Selector */}
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
+                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5 text-orange-600" />
-                    Ahmedabad Locality
+                    City Selection
                   </label>
                   <select
-                    value={selectedLocality}
-                    onChange={(e) => setSelectedLocality(e.target.value)}
-                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
                   >
-                    <option value="All Ahmedabad">All Ahmedabad Areas</option>
-                    <option value="SG Highway">SG Highway (Party Plots)</option>
-                    <option value="Sindhu Bhavan Road">Sindhu Bhavan Road</option>
-                    <option value="Bodakdev">Bodakdev / Judges Bungalow</option>
-                    <option value="Satellite">Satellite / Prahlad Nagar</option>
-                    <option value="Bopal">Bopal &amp; South Bopal</option>
-                    <option value="Vastrapur">Vastrapur</option>
-                    <option value="Maninagar">Maninagar &amp; Kankaria</option>
+                    {cities.map((c) => (
+                      <option key={c} value={c}>
+                        {c === 'All Cities' ? '📍 All Cities (India & Gujarat)' : c}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 {/* Event Date */}
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
+                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5 text-orange-600" />
                     Event Date
                   </label>
@@ -138,20 +152,20 @@ export default function HomePage() {
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full text-xs font-semibold px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full text-xs font-semibold px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
                   />
                 </div>
 
                 {/* Guest Count */}
                 <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
+                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
                     <Users className="w-3.5 h-3.5 text-orange-600" />
                     Estimated Guests
                   </label>
                   <select
                     value={guestCount}
                     onChange={(e) => setGuestCount(Number(e.target.value))}
-                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
                   >
                     <option value="150">100 - 200 Guests (Intimate)</option>
                     <option value="400">300 - 500 Guests (Standard)</option>
@@ -175,10 +189,10 @@ export default function HomePage() {
           </div>
 
           {/* Key Value Props Pill Bar */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-600 font-medium">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-600 dark:text-gray-400 font-medium">
             <span className="flex items-center gap-1.5">
               <CheckCircle className="w-4 h-4 text-emerald-600" />
-              30–50 Manually Verified Ahmedabad Vendors
+              Verified Vendors across All Cities
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle className="w-4 h-4 text-emerald-600" />
@@ -198,51 +212,51 @@ export default function HomePage() {
           <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
             Simple 4-Step Workflow
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
-            Kaise Kaam Karta Hai Amdavad Utsav?
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-1">
+            Kaise Kaam Karta Hai Utsav Marketplace?
           </h2>
-          <p className="text-xs sm:text-sm text-gray-500 mt-2">
-            No endless phone calls or bargaining confusion. Transparent pricing with instant booking.
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
+            No endless phone calls or bargaining confusion. Transparent pricing with instant multi-vendor booking.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 font-extrabold flex items-center justify-center mb-4">
+          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
               1
             </div>
-            <h3 className="font-bold text-gray-900 text-sm mb-1">Select Event Type</h3>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              Wedding, Garba, ya Corporate chunein. System auto-map karta hai required categories.
+            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Select Event &amp; City</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              Wedding, Garba, Birthday ya Corporate. Sheher chunein aur required categories auto-map ho jayengi.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 font-extrabold flex items-center justify-center mb-4">
+          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
               2
             </div>
-            <h3 className="font-bold text-gray-900 text-sm mb-1">Smart Checklist</h3>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Smart Checklist</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Har required service (Venue, Caterer, Decor, DJ) ke verified vendors ko compare karein.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 font-extrabold flex items-center justify-center mb-4">
+          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
               3
             </div>
-            <h3 className="font-bold text-gray-900 text-sm mb-1">Build Multi-Vendor Plan</h3>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Build Multi-Vendor Plan</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Selected packages ko "My Plan" me add karein aur live budget tracker se cost monitor karein.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 font-extrabold flex items-center justify-center mb-4">
+          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
               4
             </div>
-            <h3 className="font-bold text-gray-900 text-sm mb-1">Single 30% Checkout</h3>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Single 30% Checkout</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
               Ek hi checkout me sabhi vendors book. Paisa escrow me surakshit, dates turant locked.
             </p>
           </div>
@@ -256,18 +270,18 @@ export default function HomePage() {
             <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
               Curated Supply
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
-              Top Verified Vendors in Ahmedabad
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-1">
+              Top Verified Vendors {selectedCity !== 'All Cities' ? `in ${selectedCity}` : 'Across Cities'}
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 mt-1">
-              FSSAI-licensed caterers, sanctioned party plots, and vetted wedding specialists.
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
+              FSSAI-licensed caterers, sanctioned party plots, luxury banquets, and vetted wedding artists.
             </p>
           </div>
           <Link
             href="/vendors"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700"
           >
-            <span>View All Ahmedabad Vendors ({vendors.length})</span>
+            <span>View All Vendors ({vendors.length})</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -279,8 +293,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Section 8: 4-Layer Fraud Prevention & Verification Guarantee */}
-      <section className="bg-gradient-to-br from-gray-900 to-gray-950 text-white py-16 px-4 sm:px-6 lg:px-8 rounded-3xl max-w-7xl mx-auto shadow-2xl">
+      {/* Section 8: 4-Layer Fraud Prevention */}
+      <section className="bg-gradient-to-br from-gray-900 to-gray-950 dark:from-black dark:to-gray-950 text-white py-16 px-4 sm:px-6 lg:px-8 rounded-3xl max-w-7xl mx-auto shadow-2xl border border-gray-800">
         <div className="max-w-4xl mx-auto">
           <div className="text-center space-y-3 mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/30">
@@ -291,7 +305,7 @@ export default function HomePage() {
               Aapka Event Hamari Zimmedari: Zero Fake Vendors
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 max-w-2xl mx-auto">
-              Marketplace par listing live hone se pehle har vendor ko 4-tier verification clear karna hota hai.
+              Har sheher me platform par listing live hone se pehle vendor ko 4-tier verification clear karna hota hai.
             </p>
           </div>
 
@@ -352,13 +366,13 @@ export default function HomePage() {
         <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-3xl p-8 sm:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
             <span className="text-xs font-bold uppercase tracking-wider text-orange-200">
-              For Ahmedabad Event Vendors
+              For Event Vendors Across All Cities
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold">
-              Kya aap Party Plot, Caterer ya Photographer hain?
+              Kya aap Party Plot, Banquet Hall, Caterer ya Photographer hain?
             </h3>
             <p className="text-xs sm:text-sm text-orange-100">
-              Amdavad Utsav par apni business listing live karein. First 3 bookings zero platform commission ke saath!
+              Utsav Marketplace par apni business listing live karein. Pehli 3 bookings zero platform commission ke saath!
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">

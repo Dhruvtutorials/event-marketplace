@@ -22,10 +22,18 @@ import {
   INITIAL_VENDORS,
   INITIAL_CLIENT_EVENT,
   INITIAL_BOOKINGS,
+  SUPPORTED_CITIES,
 } from './db-seed';
 import { maskSensitiveContacts } from './utils';
 
 interface MarketplaceContextType {
+  // Theme & Location
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+  selectedCity: string;
+  setSelectedCity: (city: string) => void;
+  cities: string[];
+
   // Current user persona
   currentRole: UserRole;
   setCurrentRole: (role: UserRole) => void;
@@ -80,6 +88,8 @@ interface MarketplaceContextType {
 const MarketplaceContext = createContext<MarketplaceContextType | undefined>(undefined);
 
 export function MarketplaceProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [selectedCity, setSelectedCity] = useState<string>('All Cities');
   const [currentRole, setCurrentRole] = useState<UserRole>('CLIENT');
   const [currentVendorId, setCurrentVendorId] = useState<string>('vnd-1');
 
@@ -120,6 +130,18 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
   // Load from localStorage on mount
   useEffect(() => {
     try {
+      const storedTheme = localStorage.getItem('utsav_theme') as 'light' | 'dark' | null;
+      if (storedTheme) {
+        setTheme(storedTheme);
+        document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+        document.documentElement.classList.add('dark');
+      }
+
+      const storedCity = localStorage.getItem('utsav_city');
+      if (storedCity) setSelectedCity(storedCity);
+
       const storedSettings = localStorage.getItem('utsav_settings');
       if (storedSettings) setSettings(JSON.parse(storedSettings));
 
@@ -139,6 +161,20 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
     }
     setIsLoaded(true);
   }, []);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'light' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      localStorage.setItem('utsav_theme', next);
+      return next;
+    });
+  };
+
+  const handleSetCity = (city: string) => {
+    setSelectedCity(city);
+    localStorage.setItem('utsav_city', city);
+  };
 
   // Save changes to localStorage
   useEffect(() => {
@@ -404,6 +440,11 @@ export function MarketplaceProvider({ children }: { children: React.ReactNode })
   return (
     <MarketplaceContext.Provider
       value={{
+        theme,
+        toggleTheme,
+        selectedCity,
+        setSelectedCity: handleSetCity,
+        cities: SUPPORTED_CITIES,
         currentRole,
         setCurrentRole,
         currentVendorId,
