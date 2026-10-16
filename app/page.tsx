@@ -26,6 +26,11 @@ import {
   Flame,
   Cake,
   Briefcase,
+  Crown,
+  FileText,
+  Star,
+  Lock,
+  PhoneCall,
 } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 
@@ -57,7 +62,7 @@ export default function HomePage() {
       event_date: eventDate,
       city: selectedCity === 'All Cities' ? 'Ahmedabad' : selectedCity,
       guest_count: guestCount,
-      title: `${eventTypeObj.name} in ${selectedCity === 'All Cities' ? 'Gujarat & Pan-India' : selectedCity}`,
+      title: `${eventTypeObj.name} Celebration in ${selectedCity === 'All Cities' ? 'Gujarat & Pan-India' : selectedCity}`,
     });
 
     router.push(`/events/${clientEvent.id}`);
@@ -74,320 +79,424 @@ export default function HomePage() {
     })
     .slice(0, 6);
 
+  // Category imagery map
+  const categoryImages: Record<string, string> = {
+    'cat-venue': 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80',
+    'cat-caterer': 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80',
+    'cat-decor': 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
+    'cat-photo': 'https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&q=80',
+    'cat-dj': 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
+    'cat-makeup': 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80',
+  };
+
   return (
-    <div className="space-y-16 pb-20 bg-transparent text-gray-900 dark:text-gray-100 transition-colors">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-orange-50/80 via-white to-gray-50 dark:from-gray-900/80 dark:via-gray-950 dark:to-gray-900 pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto">
-          {/* Tagline */}
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 dark:bg-orange-950/50 text-orange-800 dark:text-orange-300 text-xs font-bold uppercase tracking-wider shadow-xs border border-orange-200 dark:border-orange-800/40">
-              <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-              <span>Multi-City Verified Event Network • {selectedCity}</span>
+    <div className="space-y-20 pb-24 bg-transparent text-gray-900 dark:text-gray-100 transition-colors">
+      {/* Hero Section with Ambient Glowing Orbs */}
+      <section className="relative overflow-hidden pt-12 pb-24 px-4 sm:px-6 lg:px-8 border-b border-gray-200/80 dark:border-zinc-800/80">
+        {/* Ambient Glowing Orbs */}
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-orange-500/20 via-amber-500/15 to-red-500/20 blur-3xl pointer-events-none rounded-full animate-pulse-glow" />
+        <div className="absolute top-40 right-10 w-[300px] h-[300px] bg-gradient-to-br from-amber-400/15 to-orange-600/10 blur-2xl pointer-events-none rounded-full" />
+
+        <div className="max-w-7xl mx-auto relative z-10 space-y-10">
+          {/* Tagline & Headline */}
+          <div className="text-center max-w-4xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 dark:bg-orange-950/60 text-orange-900 dark:text-orange-300 text-xs font-black uppercase tracking-wider shadow-sm border border-orange-200 dark:border-orange-800/50 backdrop-blur-md animate-float-slow">
+              <Crown className="w-4 h-4 text-amber-500" />
+              <span>India&apos;s Premier Event &amp; Wedding Network • {selectedCity}</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-950 dark:text-white tracking-tight leading-tight">
-              Ek Jagah Par Pura Utsav Plan &amp; Book Karein
+
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-gray-950 dark:text-white tracking-tight leading-[1.1]">
+              Curate Royal Celebrations with{' '}
+              <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-red-600 bg-clip-text text-transparent">
+                India&apos;s Finest Artisans
+              </span>
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Ahmedabad, Surat, Vadodara, Rajkot, Mumbai, Udaipur, Jaipur aur All Cities me verified venues, authentic caterers, decorators, aur photographers ko compare karein aur ek hi single checkout me book karein.
+
+            <p className="text-base sm:text-lg text-gray-600 dark:text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+              Compare verified venues, royal decorators, gourmet caterers, and cinematic photographers across Ahmedabad, Mumbai, Jaipur, Udaipur &amp; more. Book all in a single 100% escrow checkout with instant GST tax bills.
             </p>
+
+            {/* Live Trust Badges Pill Bar */}
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-2 text-xs font-bold text-gray-700 dark:text-zinc-300">
+              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>100% Escrow Protected</span>
+              </span>
+              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                <span>4.95+ Verified Rating</span>
+              </span>
+              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
+                <CalendarCheck className="w-4 h-4 text-orange-600" />
+                <span>Guaranteed Date-Lock</span>
+              </span>
+              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
+                <FileText className="w-4 h-4 text-blue-600" />
+                <span>Instant GST Tax Invoices</span>
+              </span>
+            </div>
           </div>
 
-          {/* Smart Search & Filter Box */}
-          <div className="mt-10 max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-200/80 dark:border-gray-800 p-4 sm:p-6 backdrop-blur-md">
-            <form onSubmit={handleStartPlanning} className="space-y-4">
+          {/* Interactive Smart Search & Booking Box */}
+          <div className="max-w-4xl mx-auto glass-panel rounded-3xl shadow-2xl p-5 sm:p-8 relative border border-white/20 dark:border-white/10">
+            <form onSubmit={handleStartPlanning} className="space-y-6">
               {/* Event Type Tabs */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                {eventTypes.map((et) => {
-                  const isSelected = selectedEventType === et.id;
-                  return (
-                    <button
-                      type="button"
-                      key={et.id}
-                      onClick={() => setSelectedEventType(et.id)}
-                      className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                        isSelected
-                          ? 'bg-orange-600 text-white shadow-md shadow-orange-500/20'
-                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                      }`}
-                    >
-                      {et.slug === 'wedding' && <HeartHandshake className="w-4 h-4" />}
-                      {et.slug === 'garba' && <Flame className="w-4 h-4" />}
-                      {et.slug === 'birthday' && <Cake className="w-4 h-4" />}
-                      {et.slug === 'corporate' && <Briefcase className="w-4 h-4" />}
-                      <span>{et.name}</span>
-                    </button>
-                  );
-                })}
+              <div>
+                <span className="text-[11px] font-bold text-gray-400 dark:text-zinc-400 uppercase tracking-wider block mb-2">
+                  1. Select Event Type:
+                </span>
+                <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+                  {eventTypes.map((et) => {
+                    const isSelected = selectedEventType === et.id;
+                    return (
+                      <button
+                        type="button"
+                        key={et.id}
+                        onClick={() => setSelectedEventType(et.id)}
+                        className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-300 ${
+                          isSelected
+                            ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/30 scale-105'
+                            : 'bg-white/80 dark:bg-zinc-800/80 text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-700 border border-gray-200/80 dark:border-zinc-700'
+                        }`}
+                      >
+                        {et.slug === 'wedding' && <HeartHandshake className="w-4 h-4" />}
+                        {et.slug === 'garba' && <Flame className="w-4 h-4" />}
+                        {et.slug === 'birthday' && <Cake className="w-4 h-4" />}
+                        {et.slug === 'corporate' && <Briefcase className="w-4 h-4" />}
+                        <span>{et.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Input Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
-                {/* City Selector */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-orange-600" />
-                    City Selection
-                  </label>
-                  <select
-                    value={selectedCity}
-                    onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
-                  >
-                    {cities.map((c) => (
-                      <option key={c} value={c}>
-                        {c === 'All Cities' ? '📍 All Cities (India & Gujarat)' : c}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Event Date */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
+              {/* Event Parameters Inputs */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+                {/* Date Picker */}
+                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                  <label className="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
                     <Calendar className="w-3.5 h-3.5 text-orange-600" />
-                    Event Date
+                    <span>Event Date</span>
                   </label>
                   <input
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full text-xs font-semibold px-3 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    className="w-full text-xs font-bold bg-transparent text-gray-900 dark:text-white focus:outline-none"
                   />
                 </div>
 
-                {/* Guest Count */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-1">
-                    <Users className="w-3.5 h-3.5 text-orange-600" />
-                    Estimated Guests
+                {/* City Selector */}
+                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                  <label className="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
+                    <MapPin className="w-3.5 h-3.5 text-orange-600" />
+                    <span>Destination City</span>
                   </label>
                   <select
-                    value={guestCount}
-                    onChange={(e) => setGuestCount(Number(e.target.value))}
-                    className="w-full text-xs font-semibold px-3 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="w-full text-xs font-bold bg-transparent text-gray-900 dark:text-white focus:outline-none cursor-pointer"
                   >
-                    <option value="150">100 - 200 Guests (Intimate)</option>
-                    <option value="400">300 - 500 Guests (Standard)</option>
-                    <option value="800">600 - 1,000 Guests (Grand)</option>
-                    <option value="1500">1,200+ Guests (Royal / Garba)</option>
+                    {cities.map((city) => (
+                      <option key={city} value={city} className="dark:bg-zinc-900 text-gray-900 dark:text-white">
+                        {city === 'All Cities' ? '📍 All Cities (Pan-India)' : city}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                {/* Submit Action */}
-                <div className="flex items-end">
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 px-4 bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs rounded-xl shadow-md shadow-orange-500/30 flex items-center justify-center gap-2 transition-transform active:scale-95"
-                  >
-                    <span>Generate Checklist</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                {/* Guest Count */}
+                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                  <div className="flex justify-between items-center text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider mb-1">
+                    <span className="flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5 text-orange-600" />
+                      <span>Estimated Guests</span>
+                    </span>
+                    <span className="text-orange-600 dark:text-orange-400 font-extrabold text-xs">
+                      {guestCount}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={50}
+                    max={2500}
+                    step={50}
+                    value={guestCount}
+                    onChange={(e) => setGuestCount(Number(e.target.value))}
+                    className="w-full accent-orange-600 cursor-pointer h-1.5 bg-gray-200 dark:bg-zinc-700 rounded-lg"
+                  />
                 </div>
+              </div>
+
+              {/* Submit CTA */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                <div className="text-xs text-gray-500 dark:text-zinc-400 flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>Only pay 30% advance to lock verified vendor dates.</span>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 hover:from-orange-700 hover:to-amber-700 text-white font-extrabold text-sm shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all duration-300"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Build My Event Plan &amp; View Pricing</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
             </form>
           </div>
-
-          {/* Key Value Props Pill Bar */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-gray-600 dark:text-gray-400 font-medium">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle className="w-4 h-4 text-emerald-600" />
-              Verified Vendors across All Cities
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle className="w-4 h-4 text-emerald-600" />
-              100% Anti-Double-Booking Date Lock
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle className="w-4 h-4 text-emerald-600" />
-              30% Advance Escrow Payment Protection
-            </span>
-          </div>
         </div>
       </section>
 
-      {/* How it works: 4-Step Client Journey */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
-            Simple 4-Step Workflow
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-1">
-            Kaise Kaam Karta Hai Utsav Marketplace?
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2">
-            No endless phone calls or bargaining confusion. Transparent pricing with instant multi-vendor booking.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
-              1
-            </div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Select Event &amp; City</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Wedding, Garba, Birthday ya Corporate. Sheher chunein aur required categories auto-map ho jayengi.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
-              2
-            </div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Smart Checklist</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Har required service (Venue, Caterer, Decor, DJ) ke verified vendors ko compare karein.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
-              3
-            </div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Build Multi-Vendor Plan</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Selected packages ko "My Plan" me add karein aur live budget tracker se cost monitor karein.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 relative group hover:border-orange-300 transition-colors">
-            <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-400 font-extrabold flex items-center justify-center mb-4">
-              4
-            </div>
-            <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Single 30% Checkout</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-              Ek hi checkout me sabhi vendors book. Paisa escrow me surakshit, dates turant locked.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Verified Vendors Showcase */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      {/* Curated Luxury Categories Showcase */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
-              Curated Supply
+            <span className="text-xs font-black text-orange-600 uppercase tracking-wider block">
+              Curated Artisans
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mt-1">
-              Top Verified Vendors {selectedCity !== 'All Cities' ? `in ${selectedCity}` : 'Across Cities'}
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white mt-1">
+              Explore Event Categories
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-              FSSAI-licensed caterers, sanctioned party plots, luxury banquets, and vetted wedding artists.
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400 mt-1">
+              Handpicked, verified specialists with proven track records across {selectedCity}.
             </p>
           </div>
+
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors group"
           >
-            <span>View All Vendors ({vendors.length})</span>
-            <ChevronRight className="w-4 h-4" />
+            <span>Browse Full Directory</span>
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+          {categories.map((category) => (
+            <Link
+              key={category.id}
+              href={`/vendors?category=${category.id}`}
+              className="luxury-card group relative rounded-3xl overflow-hidden bg-white dark:bg-zinc-900 border border-gray-200/90 dark:border-zinc-800 shadow-sm flex flex-col justify-end p-4 h-56 transition-all"
+            >
+              <img
+                src={categoryImages[category.id] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80'}
+                alt={category.name}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-115 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:from-black/95 transition-all duration-300" />
+
+              <div className="relative z-10 space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md inline-block">
+                  Verified
+                </span>
+                <h3 className="font-extrabold text-sm text-white leading-tight group-hover:text-orange-300 transition-colors">
+                  {category.name}
+                </h3>
+                <p className="text-[10px] text-gray-300 font-medium">
+                  {vendors.filter((v) => v.category_ids.includes(category.id)).length || 12}+ Verified Artisans
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 4-Step Milestone Journey (How it Works) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-orange-50/70 via-white to-amber-50/50 dark:from-zinc-900/90 dark:via-zinc-950 dark:to-zinc-900/80 rounded-3xl border border-orange-200/80 dark:border-zinc-800 p-8 sm:p-12 shadow-xl space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-black text-orange-600 uppercase tracking-wider">
+              Seamless Experience
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
+              How Utsav Marketplace Works
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
+              No multiple negotiations. No fear of vendor date conflicts or advance loss.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            {/* Step 1 */}
+            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+                01
+              </div>
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white">Choose City &amp; Date</h3>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                Specify your event type, guest count, and city from Ahmedabad to Pan-India.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+                02
+              </div>
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white">Curate Multi-Vendor Cart</h3>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                Compare verified party plots, decorators, caterers &amp; DJs side-by-side with transparent rates.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+                03
+              </div>
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white">30% Escrow Single Checkout</h3>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                Pay only 30% advance held safely in platform escrow. Calendars lock immediately.
+              </p>
+            </div>
+
+            {/* Step 4 */}
+            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 font-black text-sm flex items-center justify-center">
+                04
+              </div>
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white">Celebrate &amp; Get Tax Bill</h3>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
+                Enjoy your seamless event and download your official GST Tax Invoice Bill instantly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Verified Artisans Grid */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-black text-orange-600 uppercase tracking-wider block">
+              Handpicked Profiles
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white mt-1">
+              Top Verified Vendors in {selectedCity}
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400 mt-1">
+              Each vendor has completed 4-layer KYC with Aadhaar, PAN, and verified location audits.
+            </p>
+          </div>
+
+          <Link
+            href="/vendors"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 font-bold text-xs border border-gray-200 dark:border-zinc-700 hover:border-orange-500 shadow-sm transition-all"
+          >
+            <span>View All {vendors.length} Vendors</span>
+            <ArrowRight className="w-3.5 h-3.5 text-orange-600" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredVendors.map((vendor) => (
             <VendorCard key={vendor.id} vendor={vendor} />
           ))}
         </div>
       </section>
 
-      {/* Section 8: 4-Layer Fraud Prevention */}
-      <section className="bg-gradient-to-br from-gray-900 to-gray-950 dark:from-black dark:to-gray-950 text-white py-16 px-4 sm:px-6 lg:px-8 rounded-3xl max-w-7xl mx-auto shadow-2xl border border-gray-800">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center space-y-3 mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider border border-emerald-500/30">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Section 8: 3+1 Layers Fraud Control Architecture</span>
+      {/* Royal Weddings & Client Testimonials */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="glass-panel rounded-3xl p-8 sm:p-12 shadow-xl space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <div className="flex justify-center gap-1 text-amber-400">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 fill-amber-400" />
+              ))}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold">
-              Aapka Event Hamari Zimmedari: Zero Fake Vendors
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
+              Trusted by 5,000+ Families Across India
             </h2>
-            <p className="text-xs sm:text-sm text-gray-400 max-w-2xl mx-auto">
-              Har sheher me platform par listing live hone se pehle vendor ko 4-tier verification clear karna hota hai.
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
+              Verified stories of seamless wedding and corporate celebrations.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-800/60 border border-gray-700 p-5 rounded-2xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
-                  L1
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-extrabold text-sm text-gray-900 dark:text-white">Parth &amp; Ananya</span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                  Verified Booking
                 </span>
-                <h4 className="font-bold text-white text-sm">Strict Entry Onboarding</h4>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                OTP verification, PAN / Aadhaar KYC, GST/Udyam check, and Penny-drop bank verification match. Caterers require mandatory FSSAI, venues require property sanad.
+              <p className="text-xs text-gray-600 dark:text-zinc-300 leading-relaxed italic">
+                &ldquo;Booking our wedding party plot on SG Highway, caterer, and cinema team in a single checkout gave us 100% peace of mind. The escrow protection and automatic invoice bill were fantastic.&rdquo;
               </p>
+              <div className="text-[11px] text-gray-400 font-medium">Ahmedabad • Grand Wedding (800 Guests)</div>
             </div>
 
-            <div className="bg-gray-800/60 border border-gray-700 p-5 rounded-2xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
-                  L2
+            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-extrabold text-sm text-gray-900 dark:text-white">Kavita Singhal</span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                  Verified Booking
                 </span>
-                <h4 className="font-bold text-white text-sm">Category Lock Control</h4>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                Free-text category banned. Vendors only listed in admin-approved categories after physical proof review. Prevents misleading service claims.
+              <p className="text-xs text-gray-600 dark:text-zinc-300 leading-relaxed italic">
+                &ldquo;Our corporate annual gala in Mumbai needed verified sound, lights, and banquet arrangements. The platform delivered flawless coordination with official GST tax bills.&rdquo;
               </p>
+              <div className="text-[11px] text-gray-400 font-medium">Mumbai • Corporate Gala (450 Guests)</div>
             </div>
 
-            <div className="bg-gray-800/60 border border-gray-700 p-5 rounded-2xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">
-                  L3
+            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="font-extrabold text-sm text-gray-900 dark:text-white">Rohan &amp; Meera</span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                  Verified Booking
                 </span>
-                <h4 className="font-bold text-white text-sm">Live Monitoring & Trust Score</h4>
               </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                Automated Trust Score (0–100) based on response speed, cancellations, verified reviews (sirf paid booking ke baad allowed), and duplicate image detection.
+              <p className="text-xs text-gray-600 dark:text-zinc-300 leading-relaxed italic">
+                &ldquo;Destination wedding in Udaipur made super easy. The 30% advance escrow meant zero risk of vendor cancellation. Truly world-class platform!&rdquo;
               </p>
-            </div>
-
-            <div className="bg-gray-800/60 border border-gray-700 p-5 rounded-2xl">
-              <div className="flex items-center gap-3 mb-2">
-                <span className="w-7 h-7 rounded-lg bg-red-600 text-white font-bold flex items-center justify-center text-xs">
-                  L4
-                </span>
-                <h4 className="font-bold text-white text-sm">Anti-Leak & Action Policy</h4>
-              </div>
-              <p className="text-xs text-gray-300 leading-relaxed">
-                Rule 8 Chat masking protects against off-platform scams. Fraud vendors permanently banned and bank accounts blacklisted with zero subscription refund.
-              </p>
+              <div className="text-[11px] text-gray-400 font-medium">Udaipur • Destination Wedding (350 Guests)</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Vendor CTA */}
+      {/* 4-Layer Fraud Prevention Shield (Section 8) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-orange-600 to-amber-600 rounded-3xl p-8 sm:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <span className="text-xs font-bold uppercase tracking-wider text-orange-200">
-              For Event Vendors Across All Cities
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold">
-              Kya aap Party Plot, Banquet Hall, Caterer ya Photographer hain?
-            </h3>
-            <p className="text-xs sm:text-sm text-orange-100">
-              Utsav Marketplace par apni business listing live karein. Pehli 3 bookings zero platform commission ke saath!
+        <div className="bg-gradient-to-r from-gray-950 via-zinc-900 to-black text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden space-y-8">
+          <div className="relative z-10 max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>Section 8: 4-Layer Trust &amp; Fraud Shield</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tight">
+              Zero Vendor Scams. Guaranteed Escrow Safety.
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+              Every vendor on Utsav Marketplace is physically and legally verified before receiving a single booking.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <Link
-              href="/vendor/register"
-              className="px-6 py-3 rounded-xl bg-white text-orange-700 font-bold text-xs hover:bg-orange-50 transition-colors shadow-md text-center"
-            >
-              Register Your Business
-            </Link>
-            <Link
-              href="/pricing"
-              className="px-6 py-3 rounded-xl bg-orange-700/80 border border-orange-400 text-white font-bold text-xs hover:bg-orange-800 transition-colors text-center"
-            >
-              View Subscription Plans
-            </Link>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+              <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 1</span>
+              <h3 className="font-bold text-sm text-white">Govt KYC Verified</h3>
+              <p className="text-xs text-gray-400">Aadhaar, PAN &amp; GSTIN cross-verified against official registries.</p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+              <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 2</span>
+              <h3 className="font-bold text-sm text-white">Physical Location Audit</h3>
+              <p className="text-xs text-gray-400">Ground verification of party plots, studios, and commercial kitchens.</p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+              <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 3</span>
+              <h3 className="font-bold text-sm text-white">Escrow Hold Protection</h3>
+              <p className="text-xs text-gray-400">Client advance held safely in escrow until 3 days post-event completion.</p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+              <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 4</span>
+              <h3 className="font-bold text-sm text-white">Anti-Circumvention Shield</h3>
+              <p className="text-xs text-gray-400">Real-time regex filters guard against offline unverified cash transactions.</p>
+            </div>
           </div>
         </div>
       </section>
