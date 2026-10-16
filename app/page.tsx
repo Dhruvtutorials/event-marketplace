@@ -31,6 +31,7 @@ import {
   Star,
   Lock,
   PhoneCall,
+  Gem,
 } from 'lucide-react';
 import { formatINR } from '@/lib/utils';
 
@@ -92,22 +93,22 @@ export default function HomePage() {
   return (
     <div className="space-y-20 pb-24 bg-transparent text-gray-900 dark:text-gray-100 transition-colors">
       {/* Hero Section with Ambient Glowing Orbs */}
-      <section className="relative overflow-hidden pt-12 pb-24 px-4 sm:px-6 lg:px-8 border-b border-gray-200/80 dark:border-zinc-800/80">
+      <section className="relative overflow-hidden pt-12 pb-24 px-4 sm:px-6 lg:px-8 border-b border-amber-900/10 dark:border-amber-400/10">
         {/* Ambient Glowing Orbs */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-orange-500/20 via-amber-500/15 to-red-500/20 blur-3xl pointer-events-none rounded-full animate-pulse-glow" />
-        <div className="absolute top-40 right-10 w-[300px] h-[300px] bg-gradient-to-br from-amber-400/15 to-orange-600/10 blur-2xl pointer-events-none rounded-full" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-600/15 blur-3xl pointer-events-none rounded-full animate-pulse-glow" />
+        <div className="absolute top-36 right-8 w-[320px] h-[320px] bg-gradient-to-br from-amber-400/10 to-yellow-600/10 blur-2xl pointer-events-none rounded-full" />
 
         <div className="max-w-7xl mx-auto relative z-10 space-y-10">
           {/* Tagline & Headline */}
           <div className="text-center max-w-4xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 dark:bg-orange-950/60 text-orange-900 dark:text-orange-300 text-xs font-black uppercase tracking-wider shadow-sm border border-orange-200 dark:border-orange-800/50 backdrop-blur-md animate-float-slow">
-              <Crown className="w-4 h-4 text-amber-500" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/70 dark:bg-midnight-850 text-amber-900 dark:text-amber-300 text-xs font-black uppercase tracking-wider shadow-sm border border-amber-200/90 dark:border-amber-500/30 backdrop-blur-md animate-float-slow">
+              <Crown className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>India&apos;s Premier Event &amp; Wedding Network • {selectedCity}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-gray-950 dark:text-white tracking-tight leading-[1.1]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-gray-950 dark:text-white tracking-tight leading-[1.12]">
               Curate Royal Celebrations with{' '}
-              <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-red-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-amber-700 via-yellow-600 to-amber-600 dark:from-amber-300 dark:via-yellow-200 dark:to-amber-400 bg-clip-text text-transparent">
                 India&apos;s Finest Artisans
               </span>
             </h1>
@@ -117,32 +118,32 @@ export default function HomePage() {
             </p>
 
             {/* Live Trust Badges Pill Bar */}
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-2 text-xs font-bold text-gray-700 dark:text-zinc-300">
-              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 pt-2 text-xs font-bold text-gray-700 dark:text-zinc-300">
+              <span className="flex items-center gap-1.5 bg-white/90 dark:bg-midnight-850 px-3.5 py-1.5 rounded-full shadow-xs border border-amber-200/70 dark:border-amber-500/20">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>100% Escrow Protected</span>
               </span>
-              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
+              <span className="flex items-center gap-1.5 bg-white/90 dark:bg-midnight-850 px-3.5 py-1.5 rounded-full shadow-xs border border-amber-200/70 dark:border-amber-500/20">
                 <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                 <span>4.95+ Verified Rating</span>
               </span>
-              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
-                <CalendarCheck className="w-4 h-4 text-orange-600" />
+              <span className="flex items-center gap-1.5 bg-white/90 dark:bg-midnight-850 px-3.5 py-1.5 rounded-full shadow-xs border border-amber-200/70 dark:border-amber-500/20">
+                <CalendarCheck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                 <span>Guaranteed Date-Lock</span>
               </span>
-              <span className="flex items-center gap-1.5 bg-white/80 dark:bg-zinc-800/80 px-3 py-1.5 rounded-full shadow-xs border border-gray-200/80 dark:border-zinc-700">
-                <FileText className="w-4 h-4 text-blue-600" />
+              <span className="flex items-center gap-1.5 bg-white/90 dark:bg-midnight-850 px-3.5 py-1.5 rounded-full shadow-xs border border-amber-200/70 dark:border-amber-500/20">
+                <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span>Instant GST Tax Invoices</span>
               </span>
             </div>
           </div>
 
           {/* Interactive Smart Search & Booking Box */}
-          <div className="max-w-4xl mx-auto glass-panel rounded-3xl shadow-2xl p-5 sm:p-8 relative border border-white/20 dark:border-white/10">
+          <div className="max-w-4xl mx-auto glass-panel rounded-3xl shadow-2xl p-5 sm:p-8 relative border border-amber-200/70 dark:border-amber-400/15">
             <form onSubmit={handleStartPlanning} className="space-y-6">
               {/* Event Type Tabs */}
               <div>
-                <span className="text-[11px] font-bold text-gray-400 dark:text-zinc-400 uppercase tracking-wider block mb-2">
+                <span className="text-[11px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider block mb-2">
                   1. Select Event Type:
                 </span>
                 <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
@@ -155,8 +156,8 @@ export default function HomePage() {
                         onClick={() => setSelectedEventType(et.id)}
                         className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-300 ${
                           isSelected
-                            ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/30 scale-105'
-                            : 'bg-white/80 dark:bg-zinc-800/80 text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-700 border border-gray-200/80 dark:border-zinc-700'
+                            ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-105'
+                            : 'bg-white/80 dark:bg-midnight-800 text-gray-700 dark:text-zinc-300 hover:bg-amber-50/80 dark:hover:bg-midnight-700 border border-amber-200/80 dark:border-amber-500/20'
                         }`}
                       >
                         {et.slug === 'wedding' && <HeartHandshake className="w-4 h-4" />}
@@ -173,9 +174,9 @@ export default function HomePage() {
               {/* Event Parameters Inputs */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                 {/* Date Picker */}
-                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                <div className="bg-white/90 dark:bg-midnight-800 p-3.5 rounded-2xl border border-amber-200/80 dark:border-amber-500/20">
                   <label className="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                    <Calendar className="w-3.5 h-3.5 text-orange-600" />
+                    <Calendar className="w-3.5 h-3.5 text-amber-600" />
                     <span>Event Date</span>
                   </label>
                   <input
@@ -187,9 +188,9 @@ export default function HomePage() {
                 </div>
 
                 {/* City Selector */}
-                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                <div className="bg-white/90 dark:bg-midnight-800 p-3.5 rounded-2xl border border-amber-200/80 dark:border-amber-500/20">
                   <label className="text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5 mb-1">
-                    <MapPin className="w-3.5 h-3.5 text-orange-600" />
+                    <MapPin className="w-3.5 h-3.5 text-amber-600" />
                     <span>Destination City</span>
                   </label>
                   <select
@@ -198,7 +199,7 @@ export default function HomePage() {
                     className="w-full text-xs font-bold bg-transparent text-gray-900 dark:text-white focus:outline-none cursor-pointer"
                   >
                     {cities.map((city) => (
-                      <option key={city} value={city} className="dark:bg-zinc-900 text-gray-900 dark:text-white">
+                      <option key={city} value={city} className="dark:bg-midnight-900 text-gray-900 dark:text-white">
                         {city === 'All Cities' ? '📍 All Cities (Pan-India)' : city}
                       </option>
                     ))}
@@ -206,13 +207,13 @@ export default function HomePage() {
                 </div>
 
                 {/* Guest Count */}
-                <div className="bg-white/80 dark:bg-zinc-800/80 p-3.5 rounded-2xl border border-gray-200 dark:border-zinc-700">
+                <div className="bg-white/90 dark:bg-midnight-800 p-3.5 rounded-2xl border border-amber-200/80 dark:border-amber-500/20">
                   <div className="flex justify-between items-center text-[10px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider mb-1">
                     <span className="flex items-center gap-1">
-                      <Users className="w-3.5 h-3.5 text-orange-600" />
+                      <Users className="w-3.5 h-3.5 text-amber-600" />
                       <span>Estimated Guests</span>
                     </span>
-                    <span className="text-orange-600 dark:text-orange-400 font-extrabold text-xs">
+                    <span className="text-amber-600 dark:text-amber-400 font-extrabold text-xs">
                       {guestCount}
                     </span>
                   </div>
@@ -223,7 +224,7 @@ export default function HomePage() {
                     step={50}
                     value={guestCount}
                     onChange={(e) => setGuestCount(Number(e.target.value))}
-                    className="w-full accent-orange-600 cursor-pointer h-1.5 bg-gray-200 dark:bg-zinc-700 rounded-lg"
+                    className="w-full accent-amber-600 cursor-pointer h-1.5 bg-gray-200 dark:bg-midnight-700 rounded-lg"
                   />
                 </div>
               </div>
@@ -237,7 +238,7 @@ export default function HomePage() {
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600 hover:from-orange-700 hover:to-amber-700 text-white font-extrabold text-sm shadow-xl shadow-orange-500/25 flex items-center justify-center gap-2 active:scale-95 transition-all duration-300"
+                  className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:from-amber-700 hover:to-amber-600 text-white font-extrabold text-sm shadow-xl shadow-amber-500/30 flex items-center justify-center gap-2 active:scale-95 transition-all duration-300"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Build My Event Plan &amp; View Pricing</span>
@@ -253,7 +254,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-black text-orange-600 uppercase tracking-wider block">
+            <span className="text-xs font-black text-amber-700 dark:text-amber-400 uppercase tracking-wider block">
               Curated Artisans
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white mt-1">
@@ -266,7 +267,7 @@ export default function HomePage() {
 
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors group"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 dark:text-amber-400 hover:text-amber-800 transition-colors group"
           >
             <span>Browse Full Directory</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -278,7 +279,7 @@ export default function HomePage() {
             <Link
               key={category.id}
               href={`/vendors?category=${category.id}`}
-              className="luxury-card group relative rounded-3xl overflow-hidden bg-white dark:bg-zinc-900 border border-gray-200/90 dark:border-zinc-800 shadow-sm flex flex-col justify-end p-4 h-56 transition-all"
+              className="luxury-card group relative rounded-3xl overflow-hidden bg-white dark:bg-midnight-850 shadow-sm flex flex-col justify-end p-4 h-56 transition-all"
             >
               <img
                 src={categoryImages[category.id] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80'}
@@ -288,10 +289,10 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:from-black/95 transition-all duration-300" />
 
               <div className="relative z-10 space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md inline-block">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-950/70 border border-amber-400/30 px-2 py-0.5 rounded-md inline-block">
                   Verified
                 </span>
-                <h3 className="font-extrabold text-sm text-white leading-tight group-hover:text-orange-300 transition-colors">
+                <h3 className="font-extrabold text-sm text-white leading-tight group-hover:text-amber-300 transition-colors">
                   {category.name}
                 </h3>
                 <p className="text-[10px] text-gray-300 font-medium">
@@ -305,10 +306,10 @@ export default function HomePage() {
 
       {/* 4-Step Milestone Journey (How it Works) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-orange-50/70 via-white to-amber-50/50 dark:from-zinc-900/90 dark:via-zinc-950 dark:to-zinc-900/80 rounded-3xl border border-orange-200/80 dark:border-zinc-800 p-8 sm:p-12 shadow-xl space-y-8">
+        <div className="bg-gradient-to-br from-amber-50/60 via-white to-amber-50/40 dark:from-midnight-850 dark:via-midnight-900 dark:to-midnight-850 rounded-3xl border border-amber-200/80 dark:border-amber-500/20 p-8 sm:p-12 shadow-xl space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-black text-orange-600 uppercase tracking-wider">
-              Seamless Experience
+            <span className="text-xs font-black text-amber-700 dark:text-amber-400 uppercase tracking-wider">
+              Seamless Royal Experience
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
               How Utsav Marketplace Works
@@ -320,19 +321,19 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
             {/* Step 1 */}
-            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+            <div className="bg-white dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 font-black text-sm flex items-center justify-center border border-amber-200/80 dark:border-amber-600/30">
                 01
               </div>
               <h3 className="font-bold text-sm text-gray-900 dark:text-white">Choose City &amp; Date</h3>
               <p className="text-xs text-gray-500 dark:text-zinc-400 leading-relaxed">
-                Specify your event type, guest count, and city from Ahmedabad to Pan-India.
+                Specify your event type, guest count, and destination city from Ahmedabad to Pan-India.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+            <div className="bg-white dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 font-black text-sm flex items-center justify-center border border-amber-200/80 dark:border-amber-600/30">
                 02
               </div>
               <h3 className="font-bold text-sm text-gray-900 dark:text-white">Curate Multi-Vendor Cart</h3>
@@ -342,8 +343,8 @@ export default function HomePage() {
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/70 text-orange-600 font-black text-sm flex items-center justify-center">
+            <div className="bg-white dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 font-black text-sm flex items-center justify-center border border-amber-200/80 dark:border-amber-600/30">
                 03
               </div>
               <h3 className="font-bold text-sm text-gray-900 dark:text-white">30% Escrow Single Checkout</h3>
@@ -353,8 +354,8 @@ export default function HomePage() {
             </div>
 
             {/* Step 4 */}
-            <div className="bg-white dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200/80 dark:border-zinc-700/80 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 font-black text-sm flex items-center justify-center">
+            <div className="bg-white dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3 relative group hover:-translate-y-1 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 font-black text-sm flex items-center justify-center border border-emerald-200 dark:border-emerald-600/30">
                 04
               </div>
               <h3 className="font-bold text-sm text-gray-900 dark:text-white">Celebrate &amp; Get Tax Bill</h3>
@@ -370,23 +371,23 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <span className="text-xs font-black text-orange-600 uppercase tracking-wider block">
+            <span className="text-xs font-black text-amber-700 dark:text-amber-400 uppercase tracking-wider block">
               Handpicked Profiles
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white mt-1">
               Top Verified Vendors in {selectedCity}
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400 mt-1">
-              Each vendor has completed 4-layer KYC with Aadhaar, PAN, and verified location audits.
+              Each vendor has completed 4-layer KYC with Aadhaar, PAN, and verified physical location audits.
             </p>
           </div>
 
           <Link
             href="/vendors"
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 text-gray-800 dark:text-zinc-200 font-bold text-xs border border-gray-200 dark:border-zinc-700 hover:border-orange-500 shadow-sm transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white dark:bg-midnight-850 text-gray-800 dark:text-zinc-200 font-bold text-xs border border-amber-200/80 dark:border-amber-500/20 hover:border-amber-500 shadow-sm transition-all"
           >
             <span>View All {vendors.length} Vendors</span>
-            <ArrowRight className="w-3.5 h-3.5 text-orange-600" />
+            <ArrowRight className="w-3.5 h-3.5 text-amber-600" />
           </Link>
         </div>
 
@@ -399,7 +400,7 @@ export default function HomePage() {
 
       {/* Royal Weddings & Client Testimonials */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-panel rounded-3xl p-8 sm:p-12 shadow-xl space-y-8">
+        <div className="glass-panel rounded-3xl p-8 sm:p-12 shadow-xl space-y-8 border border-amber-200/80 dark:border-amber-500/20">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <div className="flex justify-center gap-1 text-amber-400">
               {[...Array(5)].map((_, i) => (
@@ -410,15 +411,15 @@ export default function HomePage() {
               Trusted by 5,000+ Families Across India
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
-              Verified stories of seamless wedding and corporate celebrations.
+              Verified stories of seamless royal wedding and corporate celebrations.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+            <div className="bg-white/90 dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-extrabold text-sm text-gray-900 dark:text-white">Parth &amp; Ananya</span>
-                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
                   Verified Booking
                 </span>
               </div>
@@ -428,10 +429,10 @@ export default function HomePage() {
               <div className="text-[11px] text-gray-400 font-medium">Ahmedabad • Grand Wedding (800 Guests)</div>
             </div>
 
-            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+            <div className="bg-white/90 dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-extrabold text-sm text-gray-900 dark:text-white">Kavita Singhal</span>
-                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
                   Verified Booking
                 </span>
               </div>
@@ -441,10 +442,10 @@ export default function HomePage() {
               <div className="text-[11px] text-gray-400 font-medium">Mumbai • Corporate Gala (450 Guests)</div>
             </div>
 
-            <div className="bg-white/80 dark:bg-zinc-800/80 p-6 rounded-2xl border border-gray-200 dark:border-zinc-700 shadow-sm space-y-3">
+            <div className="bg-white/90 dark:bg-midnight-800 p-6 rounded-2xl border border-amber-200/70 dark:border-amber-500/20 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-extrabold text-sm text-gray-900 dark:text-white">Rohan &amp; Meera</span>
-                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-full">
                   Verified Booking
                 </span>
               </div>
@@ -459,9 +460,9 @@ export default function HomePage() {
 
       {/* 4-Layer Fraud Prevention Shield (Section 8) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-gray-950 via-zinc-900 to-black text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden space-y-8">
+        <div className="bg-gradient-to-r from-midnight-950 via-midnight-900 to-midnight-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden space-y-8 border border-amber-400/20">
           <div className="relative z-10 max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold uppercase border border-emerald-500/30">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>Section 8: 4-Layer Trust &amp; Fraud Shield</span>
             </div>
@@ -474,25 +475,25 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+            <div className="bg-white/5 border border-amber-400/15 p-5 rounded-2xl space-y-2">
               <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 1</span>
               <h3 className="font-bold text-sm text-white">Govt KYC Verified</h3>
               <p className="text-xs text-gray-400">Aadhaar, PAN &amp; GSTIN cross-verified against official registries.</p>
             </div>
 
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+            <div className="bg-white/5 border border-amber-400/15 p-5 rounded-2xl space-y-2">
               <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 2</span>
               <h3 className="font-bold text-sm text-white">Physical Location Audit</h3>
               <p className="text-xs text-gray-400">Ground verification of party plots, studios, and commercial kitchens.</p>
             </div>
 
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+            <div className="bg-white/5 border border-amber-400/15 p-5 rounded-2xl space-y-2">
               <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 3</span>
               <h3 className="font-bold text-sm text-white">Escrow Hold Protection</h3>
               <p className="text-xs text-gray-400">Client advance held safely in escrow until 3 days post-event completion.</p>
             </div>
 
-            <div className="bg-white/5 border border-white/10 p-5 rounded-2xl space-y-2">
+            <div className="bg-white/5 border border-amber-400/15 p-5 rounded-2xl space-y-2">
               <span className="text-xs font-black text-amber-400 uppercase tracking-wider block">Layer 4</span>
               <h3 className="font-bold text-sm text-white">Anti-Circumvention Shield</h3>
               <p className="text-xs text-gray-400">Real-time regex filters guard against offline unverified cash transactions.</p>

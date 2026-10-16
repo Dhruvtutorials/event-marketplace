@@ -30,26 +30,26 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
   };
 
   return (
-    <div className="luxury-card bg-white dark:bg-zinc-900 rounded-3xl border border-gray-200/90 dark:border-zinc-800 overflow-hidden shadow-sm flex flex-col group relative">
+    <div className="luxury-card bg-white dark:bg-midnight-850 rounded-3xl border border-amber-200/70 dark:border-amber-500/20 overflow-hidden shadow-sm flex flex-col group relative transition-all duration-300">
       {/* Cover Image & Badges */}
-      <div className="relative h-52 w-full overflow-hidden bg-gray-100 dark:bg-zinc-800">
+      <div className="relative h-52 w-full overflow-hidden bg-gray-100 dark:bg-midnight-800">
         <img
           src={vendor.cover_image}
           alt={vendor.business_name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
           {vendor.verified_badge && (
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-600/95 text-white backdrop-blur-md shadow-md">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-600/95 text-white backdrop-blur-md shadow-md border border-emerald-400/30">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-200" />
               <span>Verified Artisan</span>
             </span>
           )}
           {vendor.current_subscription?.plan_id === 'plan-premium' && (
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold bg-gradient-to-r from-amber-500 to-amber-600 text-white backdrop-blur-md shadow-md">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-extrabold bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white backdrop-blur-md shadow-md border border-amber-300/40">
               <Crown className="w-3.5 h-3.5 text-amber-200" />
               <span>Royal Tier</span>
             </span>
@@ -57,15 +57,15 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
         </div>
 
         {/* Trust Score Top Right */}
-        <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-semibold flex items-center gap-1.5 shadow-md border border-white/10 z-10">
+        <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-semibold flex items-center gap-1.5 shadow-md border border-amber-400/20 z-10">
           <span className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">Trust Score</span>
-          <span className="font-black text-white">{vendor.trust_score}%</span>
+          <span className="font-black text-amber-200">{vendor.trust_score}%</span>
         </div>
 
         {/* Bottom Locality & Rating on Cover */}
         <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs z-10">
           <span className="inline-flex items-center gap-1 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-xl font-semibold border border-white/10">
-            <MapPin className="w-3.5 h-3.5 text-orange-400" />
+            <MapPin className="w-3.5 h-3.5 text-amber-400" />
             <span>{vendor.locality}, {vendor.city}</span>
           </span>
           <span className="flex items-center gap-1 font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10">
@@ -79,7 +79,7 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
       {/* Card Content */}
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
-          <h3 className="font-extrabold text-base text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors line-clamp-1">
+          <h3 className="font-extrabold text-base text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors line-clamp-1">
             {vendor.business_name}
           </h3>
           <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 line-clamp-2 leading-relaxed">
@@ -88,12 +88,12 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
         </div>
 
         {/* Pricing & Actions */}
-        <div className="pt-3 border-t border-gray-100 dark:border-zinc-800/80 flex items-center justify-between gap-3">
+        <div className="pt-3 border-t border-amber-100 dark:border-amber-900/30 flex items-center justify-between gap-3">
           <div>
             <span className="text-[10px] text-gray-400 dark:text-zinc-500 block font-bold uppercase tracking-wider">
               Starting from
             </span>
-            <span className="text-base font-black text-gray-900 dark:text-white">
+            <span className="text-base font-black text-gray-900 dark:text-amber-300">
               {formatINR(vendor.min_price)}
             </span>
           </div>
@@ -101,7 +101,7 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
           <div className="flex items-center gap-2">
             <Link
               href={`/vendors/${vendor.id}`}
-              className="px-3.5 py-2 text-xs font-bold text-gray-700 dark:text-zinc-200 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 rounded-xl transition-all"
+              className="px-3.5 py-2 text-xs font-bold text-amber-900 dark:text-amber-200 bg-amber-50 dark:bg-midnight-800 hover:bg-amber-100 dark:hover:bg-midnight-700 border border-amber-200/80 dark:border-amber-500/20 rounded-xl transition-all"
             >
               Portfolio
             </Link>
@@ -114,7 +114,7 @@ export function VendorCard({ vendor, highlightCategory }: VendorCardProps) {
             ) : (
               <button
                 onClick={handleQuickAdd}
-                className="inline-flex items-center gap-1 px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 rounded-xl shadow-md shadow-orange-500/20 active:scale-95 transition-all"
+                className="inline-flex items-center gap-1 px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:from-amber-700 hover:to-amber-600 rounded-xl shadow-md shadow-amber-500/25 active:scale-95 transition-all"
                 title="Add default package to active event plan"
               >
                 <Plus className="w-3.5 h-3.5" />
